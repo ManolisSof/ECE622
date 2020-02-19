@@ -27,6 +27,7 @@ public class Main {
                 .reduce(new Reduce1()) // Reduce. New tuples will be at the format of Country, Parameter, Measurement, Measurement, Measurement, Count
                 .map(new Mapper()); // Final mapping. New tuples will be at the format of Country, Parameter, Average, Standard Deviation, Gamma, Count
 
+        // Now we have to try to add all gamma(i) and get the s(i) for each stratum.
 
 //        finalData.print();
         // Delete output file if it already exists and create the output file.
