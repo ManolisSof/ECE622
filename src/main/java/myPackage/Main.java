@@ -21,7 +21,7 @@ public class Main {
         DataStream<String> data = env.readTextFile("openaqFull.csv");
 
 //        DataStream<Tuple5<String, String, Double, Double, Integer>> mapped = data.map(new Splitter());
-        DataStream<Tuple6<String, String, Double, Double, Double, Integer>> finalData = data
+        DataStream<Tuple6<String, String, Double, Double, Double, Integer>> avgVarData = data
                 .map(new Splitter()) // Split data and keep only relevant attributes
                 .keyBy(new int[]{0, 1}) // groupBy country and parameter
                 .reduce(new Reduce1()) // Reduce. New tuples will be at the format of Country, Parameter, Measurement, Measurement, Measurement, Count
@@ -29,7 +29,7 @@ public class Main {
 
         // Now we have to try to add all gamma(i) and get the s(i) for each stratum.
 
-//        finalData.print();
+//        avgVarData.print();
         // Delete output file if it already exists and create the output file.
         try {
             FileUtils.deleteDirectory(Paths.get("/home/manolis/Desktop/Special Topics on Databases/openaq data/GroupByCity_firstPass").toFile());
@@ -42,9 +42,11 @@ public class Main {
             System.out.println("Invalid permissions.");
         }
 
-        finalData.writeAsCsv("/home/manolis/Desktop/Special Topics on Databases/openaq data/GroupByCity_firstPass");
+        avgVarData.writeAsCsv("/home/manolis/Desktop/Special Topics on Databases/openaq data/GroupByCity_firstPass");
 
         env.execute("Avg Job");
+
+//        System.out.println("Final average is: " + avgFinal);
 
     }
 }
