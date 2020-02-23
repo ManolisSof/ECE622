@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.api.java.tuple.Tuple6;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -24,11 +25,11 @@ public class Main {
 
         // Create a Flink-Kafka Producer configurations to pass data from a topic to flink
         String bootsrtapServers = "127.0.0.1:9092";
-        String topic = "flink_3";
+        String topic = "flink_4";
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootsrtapServers);
         // Read data from kafka topic
-        DataStream<String> kafkaData = env.addSource(new FlinkKafkaConsumer(topic, new SimpleStringSchema(), properties));
+        DataStreamSource kafkaData = env.addSource(new FlinkKafkaConsumer(topic, new SimpleStringSchema(), properties));
 
 
         // Read data from the file
