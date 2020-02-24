@@ -30,7 +30,7 @@ public class Main {
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootsrtapServers);
         // Add the kafka topic declared above as data source.
-        DataStreamSource kafkaData = env.addSource(new FlinkKafkaConsumer(topic, new SimpleStringSchema(), properties));
+        DataStream<String> kafkaData = env.addSource(new FlinkKafkaConsumer(topic, new SimpleStringSchema(), properties));
 
 
         // Alternatively read data from the file (uncomment to read from file)
