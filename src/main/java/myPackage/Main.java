@@ -23,16 +23,17 @@ public class Main {
         // Set global parallelism
 //        env.setParallelism(3);
 
-        // Create a Flink-Kafka Producer configurations to pass data from a topic to flink
+        // Create a Flink-Kafka Producer to pass data from a topic to flink.
+        // Set configurations of the producer
         String bootsrtapServers = "127.0.0.1:9092";
-        String topic = "flink_4";
+        String topic = "flink_first_pass";
         Properties properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootsrtapServers);
-        // Read data from kafka topic
+        // Add the kafka topic declared above as data source.
         DataStreamSource kafkaData = env.addSource(new FlinkKafkaConsumer(topic, new SimpleStringSchema(), properties));
 
 
-        // Read data from the file
+        // Alternatively read data from the file (uncomment to read from file)
 //        DataStream<String> data = env.readTextFile("openaqFull.csv");
 
 //        DataStream<Tuple5<String, String, Double, Double, Integer>> mapped = data.map(new Splitter());
@@ -57,11 +58,11 @@ public class Main {
             System.out.println("Invalid permissions.");
         }
 
+        // Create a csv file as a data Sink to print results.
 //        avgVarData.writeAsCsv("/home/manolis/Desktop/Special Topics on Databases/openaq data/GroupByCity_firstPass");
 
-        env.execute("Avg Job");
-
-//        System.out.println("Final average is: " + avgFinal);
+        // Execute job
+        env.execute("First Pass Job");
 
     }
 }
